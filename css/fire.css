@@ -1,0 +1,31 @@
+/* Карточка для пожарных: светлая, крупная, читается на улице и на телефоне */
+.fc { font: 14px/1.4 'Segoe UI', system-ui, -apple-system, Roboto, Arial, sans-serif; color: #111; background: #f4f5f7; min-height: 100%; }
+.fc-top { background: #c81e16; color: #fff; padding: 22px 14px 12px; }
+.fc-top.closed { background: #4b5563; }
+.fc-lvl { font-weight: 800; font-size: 20px; text-transform: uppercase; letter-spacing: .5px; }
+.fc-obj { font-size: 17px; font-weight: 700; margin-top: 2px; }
+.fc-addr { font-size: 14px; opacity: .95; }
+.fc-small { font-size: 12.5px; margin-top: 4px; color: inherit; opacity: .9; }
+.fc-sec { background: #fff; margin: 8px; border-radius: 10px; padding: 10px 12px; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+.fc-sec h4 { margin: 0 0 6px; font-size: 13px; text-transform: uppercase; letter-spacing: .4px; color: #555; }
+.fc-people { background: #fff1f0; border: 2px solid #c81e16; }
+.fc-people h4 { color: #c81e16; }
+.fc-people .fc-row { display: block; } .fc-people .fc-row b { display: block; text-align: left; font-size: 15px; } .fc-people .fc-row span { display: block; }
+.fc-row { display: flex; justify-content: space-between; gap: 10px; padding: 3px 0; border-bottom: 1px solid #eee; font-size: 13.5px; }
+.fc-row:last-child { border-bottom: 0; } .fc-row span { color: #555; flex: 0 0 auto; } .fc-row b { text-align: right; font-weight: 600; }
+.fc-code { font-size: 20px; font-family: Consolas, monospace; letter-spacing: 1px; }
+.fc-big { font-size: 30px; font-weight: 800; } .fc-big small { font-size: 14px; font-weight: 500; color: #555; }
+.fc-plan { width: 100%; display: block; background: #fafafa; border-radius: 6px; }
+.fc-plan rect { fill: #e8eaed; stroke: #555; stroke-width: .15; }
+.fc-plan rect.corr { fill: #f6f6f6; } .fc-plan rect.fire { fill: #e5372c; } .fc-plan rect.people { fill: #ffb4ad; stroke: #c81e16; stroke-width: .4; } .fc-plan rect.unk { fill: #ffe3a3; } .fc-plan rect.exit { fill: #12a150; stroke: none; }
+.fc-plan text { font-size: 1.3px; fill: #222; font-weight: 600; } .fc-plan text.big { font-size: 3px; }
+.fc-legend { font-size: 11.5px; color: #555; margin-top: 4px; display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center; }
+.fc-legend .lg { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 3px; vertical-align: -1px; }
+.fc-legend .lg.fire { background: #e5372c; } .fc-legend .lg.people { background: #ffb4ad; border: 1px solid #c81e16; } .fc-legend .lg.unk { background: #ffe3a3; } .fc-legend .lg.exit { background: #12a150; }
+.fc-haz { padding: 6px 0; border-bottom: 1px solid #eee; font-size: 13.5px; } .fc-haz:last-child { border-bottom: 0; }
+.fc-haz.hot { background: #fff1f0; margin: 0 -12px; padding: 6px 12px; }
+.fc-ext { color: #b42318; font-weight: 700; }
+.fc-call { display: block; text-align: center; background: #12a150; color: #fff; text-decoration: none; border-radius: 9px; padding: 10px; font-weight: 700; font-size: 16px; margin: 6px 0; }
+.fc-foot { font-size: 11.5px; color: #666; text-align: center; padding: 10px 14px 24px; }
+.fc-exp { padding: 60px 20px; text-align: center; font-size: 20px; font-weight: 700; color: #b42318; }
+.fc-exp small { display: block; font-size: 14px; font-weight: 400; color: #555; margin-top: 10px; }

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ӨртБақылау — панель оператора</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23d6332a'/><path d='M16 5c1 5 7 7 7 14a7 7 0 0 1-14 0c0-4 2-6 3-8 0 3 1 4 2 4 0-4 1-7 2-10z' fill='white'/></svg>">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div id="app">
+  <header class="top">
+    <div class="brand"><span class="logo">🔥</span><div><b>ӨртБақылау</b><small>Smart Fire Safety</small></div></div>
+    <div class="obj"><b>Школа-гимназия № 7</b><small>Кызылорда · пилот · 1 этаж</small></div>
+    <div class="clock"><b id="clock">--:--:--</b><small id="clockDate"></small></div>
+    <div class="ctrls">
+      <div class="seg" title="Скорость симуляции">
+        <button class="pp" data-act="pause" title="Пауза">⏸</button>
+        <button data-act="speed" data-v="1">×1</button><button data-act="speed" data-v="5">×5</button><button data-act="speed" data-v="20">×20</button>
+      </div>
+      <div class="seg"><button data-act="night" data-v="0" title="10:42, идут уроки">☀ <span data-i18n="Утро">Утро</span></button><button data-act="night" data-v="1" title="02:15, здание пустое">☾ <span data-i18n="Ночь">Ночь</span></button></div>
+      <div class="seg" id="langSw"><button data-act="lang" data-v="ru">РУС</button><button data-act="lang" data-v="kk">ҚАЗ</button></div>
+    </div>
+    <div class="stat"><div id="gwStatus"></div><div id="srvStatus"></div></div>
+    <button class="btn primary demo" data-act="scnStart">▶ <span data-i18n="Демо-сценарий">Демо-сценарий</span></button>
+    <button class="btn ghost sm" data-act="restart" title="Перезапустить симуляцию">↺</button>
+  </header>
+  <div id="srvBanner" class="srvbanner" hidden>⛔ Нет связи с сервером более 10 с — данные на панели могут быть устаревшими. Сигнализация на объекте работает автономно.</div>
+  <div id="banner" class="banner" hidden></div>
+
+  <nav class="tabs">
+    <button class="tab on" data-act="view" data-v="monitor" data-i18n="Мониторинг">Мониторинг</button>
+    <button class="tab" data-act="view" data-v="incidents"><span data-i18n="Инциденты">Инциденты</span> <i id="tabBadgeInc" class="tb"></i></button>
+    <button class="tab" data-act="view" data-v="evac"><span data-i18n="Эвакуация">Эвакуация</span> <i id="tabBadgeEvac" class="tb red"></i></button>
+    <button class="tab" data-act="view" data-v="to"><span data-i18n="ТО">ТО</span> <i id="tabBadgeTo" class="tb"></i></button>
+    <button class="tab" data-act="view" data-v="journal" data-i18n="Журнал">Журнал</button>
+    <button class="tab" data-act="view" data-v="reports" data-i18n="Отчёты">Отчёты</button>
+    <button class="tab" data-act="view" data-v="settings" data-i18n="Настройки">Настройки</button>
+    <span class="sp"></span>
+    <button class="tab ghost" data-act="phonesToggle">📱 <span data-i18n="Телефоны на объекте">Телефоны на объекте</span></button>
+  </nav>
+
+  <div class="body">
+    <main>
+      <section class="view" id="view-monitor">
+        <div class="mon">
+          <div class="planwrap">
+            <div class="plantools">
+              <div class="seg"><button data-act="mode" data-v="3d">3D</button><button data-act="mode" data-v="2d">2D</button></div>
+              <span class="muted small">1 этаж · тяните — вращать, колесо — масштаб, Shift/ПКМ — сдвиг</span>
+              <span class="sp"></span>
+              <div class="legend">
+                <span><i class="lg ok"></i>норма</span><span><i class="lg warn"></i>внимание</span><span><i class="lg alarm"></i>тревога</span>
+                <span><i class="lg fault"></i>неиспр.</span><span><i class="lg off"></i>нет связи</span><span><i class="lg test"></i>тест/ТО</span>
+              </div>
+            </div>
+            <div id="plan3d" class="plan"></div>
+            <div id="plan2d" class="plan" hidden></div>
+          </div>
+          <aside class="side">
+            <div id="incList" class="panel"></div>
+            <div id="closeFormBox" class="panel" hidden></div>
+            <div id="detail" class="panel detail"></div>
+          </aside>
+        </div>
+        <div id="sim" class="sim"></div>
+      </section>
+      <section class="view" id="view-incidents" hidden></section>
+      <section class="view" id="view-evac" hidden></section>
+      <section class="view" id="view-to" hidden></section>
+      <section class="view" id="view-journal" hidden></section>
+      <section class="view" id="view-reports" hidden></section>
+      <section class="view" id="view-settings" hidden></section>
+    </main>
+
+    <aside id="phones" class="phones">
+      <div class="phtop"><span id="phoneSel"></span></div>
+      <div id="phoneUnread" class="unread"></div>
+      <div class="phone"><div class="phone-notch"></div><div class="phone-screen" id="phoneScreen"></div></div>
+      <div class="muted small center" id="phoneWho"></div>
+    </aside>
+  </div>
+</div>
+
+<div id="scn" class="scn" hidden></div>
+<div id="modal" class="modal" hidden><div class="modal-card"><button class="btn xs ghost mclose" data-act="modalClose">✕</button><div id="modalBody"></div></div></div>
+<div id="toasts" class="toasts"></div>
+<div id="print"></div>
+
+<script src="vendor/three.min.js"></script>
+<script src="vendor/qrcode.js"></script>
+<script src="vendor/xlsx.full.min.js"></script>
+<script src="js/data.js"></script>
+<script src="js/util.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/plan2d.js"></script>
+<script src="js/plan3d.js"></script>
+<script src="js/fire.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/views.js"></script>
+<script src="js/phones.js"></script>
+<script src="js/scenario.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
